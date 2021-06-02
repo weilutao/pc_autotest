@@ -1,29 +1,28 @@
 from selenium import webdriver
+from config.operation_yaml import OperathionYAML
 from time import sleep
-from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
 import time
-from config.operation_yaml import OperathionYAML
-
 
 
 # 参数
-oa_test_course_scheduling_data = OperathionYAML().read_yaml('oa_test_course_scheduling.yaml')
-url = oa_test_course_scheduling_data['init']['get_url']
-phone = oa_test_course_scheduling_data['loading']['phone']
-password = oa_test_course_scheduling_data['loading']['password']
-class_name = oa_test_course_scheduling_data['select_class']['class_name']
+oa_pro_course_scheduling_data = OperathionYAML().read_yaml('oa_pro_course_scheduling.yaml')
+url = oa_pro_course_scheduling_data['init']['get_url']
+phone = oa_pro_course_scheduling_data['loading']['phone']
+password = oa_pro_course_scheduling_data['loading']['password']
+class_name = oa_pro_course_scheduling_data['select_class']['class_name']
 
 
-class OATestCourse(object):
+class OAProCourse(object):
     def __init__(self):
         self.driver = webdriver.Chrome()
         self.driver.get(url)
         self.driver.maximize_window()
 
     def close_driver(self):
-        sleep(5)
+        sleep(50)
         self.driver.close()
 
     def loading(self):
@@ -33,7 +32,7 @@ class OATestCourse(object):
         self.driver.find_element_by_xpath('/html/body/div/div[2]/div/div/div[1]/div/div[2]/button').click()
 
     def select_class(self):
-        WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div[2]/ul[1]/li[4]/div/div[1]"))).click()
+        WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div[2]/ul[1]/li[5]/div/div[1]"))).click()
         sleep(1)
         WebDriverWait(self.driver, 5).until(EC.visibility_of_element_located((By.PARTIAL_LINK_TEXT, '中心班级列表'))).click()
 
@@ -64,7 +63,7 @@ class OATestCourse(object):
             M_time = str(int(M_time1) // 5 * 5)
         current_time = "{0}:{1}".format(H_time, M_time)
         print(type(current_time), current_time)
-
+        sleep(5)
         WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div[3]/div[2]/div/form/div[1]/div[2]/div/div/div[3]/div[2]/div/div/div/input'))).click()
         # 定位下拉框
         # x_path = "//div[contains(text(), '%s')]" % current_time
@@ -92,7 +91,7 @@ class OATestCourse(object):
 
 
 if __name__ == '__main__':
-    ready_course = OATestCourse()
+    ready_course = OAProCourse()
     ready_course.loading()
     ready_course.select_class()
     ready_course.course_scheduling()

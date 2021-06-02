@@ -1,5 +1,10 @@
 # config
-config/oa_test_course_scheduling.yaml
+config/*.yaml
+config/__pycache__/
+
 
 .idea/
 util/__pycache__/
+testcase/__pycache__/
+testcase/pywinauto/__pycache__/
+test.py
