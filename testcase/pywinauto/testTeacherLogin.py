@@ -1,6 +1,9 @@
 from pywinauto import Application, WindowSpecification
 from time import sleep
 from config.operation_yaml import OperathionYAML
+import allure
+import pytest
+import os
 
 # 参数
 teacher_login_data = OperathionYAML().read_yaml('teacher_login.yaml')
@@ -8,27 +11,31 @@ path = teacher_login_data['init']['path']
 phone_num = teacher_login_data['login_success']['phone_num']
 captcha = teacher_login_data['login_success']['captcha']
 
+
+@allure.feature('教师端登录')
 class TestTeacherLogin:
-    def __init__(self):
+    @classmethod
+    def setup_class(cls):
         # 启动未打开的客户端
-        self.app = Application(backend='uia').start(path)
+        cls.app = Application(backend='uia').start(path)
 
         # 选择首页主窗口
-        self.dlg = self.app['员工登录 - 贝尔云课堂']
+        cls.dlg = cls.app['员工登录 - 贝尔云课堂']
         # 首页子窗口
-        self.document = self.dlg.window(control_type='Document')
-        self.titleBar = self.dlg.window(control_type='TitleBar')
+        cls.document = cls.dlg.window(control_type='Document')
+        cls.titleBar = cls.dlg.window(control_type='TitleBar')
         # self.document.print_control_identifiers()
 
         # 直播间主窗口
-        self.dlg_studio = self.app['贝尔云课堂']
+        cls.dlg_studio = cls.app['贝尔云课堂']
         # 直播间子窗口
-        self.document_studio = self.dlg_studio.window(control_type='Document')
-        self.titleBar_studio = self.dlg_studio.window(control_type='TitleBar')
+        cls.document_studio = cls.dlg_studio.window(control_type='Document')
+        cls.titleBar_studio = cls.dlg_studio.window(control_type='TitleBar')
 
     # 登录成功
-    def login_success(self):
-
+    @allure.step('登录成功')
+    @pytest.mark.denpendency(name='teacher_login')
+    def test_login_success(self):
         # 输入账号密码，点击登录
         input_phone = self.document.child_window(title="请输入手机号", control_type="Edit")
         input_phone.wait('ready')
@@ -56,7 +63,6 @@ class TestTeacherLogin:
 
 
 if __name__ == '__main__':
-    login = TestTeacherLogin()
-    login.login_success()
-    login.close()
+    pytest.main(['testTeacherLogin.py'])
+
 

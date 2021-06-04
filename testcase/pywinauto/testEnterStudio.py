@@ -1,13 +1,18 @@
 from testcase.pywinauto.testTeacherLogin import TestTeacherLogin
 import os
 from pywinauto import WindowSpecification,keyboard
+import allure
+import pytest
 
 
-class TestEnterStudio(TestTeacherLogin):
+@allure.feature('教师端进入直播间')
+class TestEnterStudio:
     '''
         进入直播间
     '''
-    def teacher_enter_studio(self):
+    @allure.step('进入直播间')
+    @pytest.mark.dependency(depends=['teacher_login'], scope='module')
+    def test_teacher_enter_studio(self):
         # self.document.print_control_identifiers()
         # 刷新课表
         refresh_btn = self.document.Static11
@@ -22,7 +27,9 @@ class TestEnterStudio(TestTeacherLogin):
 
 if __name__ == '__main__':
     # 登录教师端
-    enterstudio = TestEnterStudio()
-    enterstudio.login_success()
-    enterstudio.teacher_enter_studio()
-    enterstudio.close()
+    # enterstudio = TestEnterStudio()
+    # enterstudio.login_success()
+    # enterstudio.teacher_enter_studio()
+    # enterstudio.close()
+    pytest.main('testEnterStudio.py')
+

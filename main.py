@@ -5,7 +5,7 @@ from testcase.pywinauto.testEnterStudio import TestEnterStudio
 
 
 if __name__ == '__main__':
-    # OA排课
+    # OA测试服排课
     oa_ready_course = OATestCourse()
     oa_ready_course.loading()
     oa_ready_course.select_class()

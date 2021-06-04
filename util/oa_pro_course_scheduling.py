@@ -5,6 +5,9 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 import time
+import allure
+import pytest
+import os
 
 
 # 参数
@@ -15,23 +18,29 @@ password = oa_pro_course_scheduling_data['loading']['password']
 class_name = oa_pro_course_scheduling_data['select_class']['class_name']
 
 
-class OAProCourse(object):
-    def __init__(self):
-        self.driver = webdriver.Chrome()
-        self.driver.get(url)
-        self.driver.maximize_window()
+@allure.feature('排课')
+class TestOAProCourse(object):
 
-    def close_driver(self):
+    @classmethod
+    def setup_class(cls):
+        cls.driver = webdriver.Chrome()
+        cls.driver.get(url)
+        cls.driver.maximize_window()
+
+    @classmethod
+    def teardown_class(cls):
         sleep(50)
-        self.driver.close()
+        cls.driver.close()
 
-    def loading(self):
+    @allure.step('登录OA')
+    def test_loading(self):
         '''登录'''
         self.driver.find_element_by_xpath('/html/body/div/div[2]/div/div/div[1]/div/form/div[1]/div/div/input').send_keys(phone)
         self.driver.find_element_by_xpath('/html/body/div/div[2]/div/div/div[1]/div/form/div[2]/div/div/input').send_keys(password)
         self.driver.find_element_by_xpath('/html/body/div/div[2]/div/div/div[1]/div/div[2]/button').click()
 
-    def select_class(self):
+    @allure.step('选择班级')
+    def test_select_class(self):
         WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[1]/div[2]/ul[1]/li[5]/div/div[1]"))).click()
         sleep(1)
         WebDriverWait(self.driver, 5).until(EC.visibility_of_element_located((By.PARTIAL_LINK_TEXT, '中心班级列表'))).click()
@@ -45,7 +54,8 @@ class OAProCourse(object):
             else:
                 return True
 
-    def course_scheduling(self):
+    @allure.step('给选中班级排课')
+    def test_course_scheduling(self):
         '''排课'''
         sleep(2)
         WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, '//div[5]/button[3]/span[contains(text(), "单节排课")]'))).click()
@@ -91,8 +101,11 @@ class OAProCourse(object):
 
 
 if __name__ == '__main__':
-    ready_course = OAProCourse()
-    ready_course.loading()
-    ready_course.select_class()
-    ready_course.course_scheduling()
-    ready_course.close_driver()
+    # ready_course = TestOAProCourse()
+    # ready_course.loading()
+    # ready_course.select_class()
+    # ready_course.course_scheduling()
+    # ready_course.close_driver()
+
+    pytest.main(['oa_pro_course_scheduling.py'])
+    os.system('allure generate ./temp -o E:/pc_autotest/reports --clean')
