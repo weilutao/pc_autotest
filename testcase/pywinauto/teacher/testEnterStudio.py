@@ -1,6 +1,3 @@
-from testcase.pywinauto.testTeacherLogin import TestTeacherLogin
-import os
-from pywinauto import WindowSpecification,keyboard
 import allure
 import pytest
 

@@ -1,12 +1,11 @@
-from util.oa_test_course_scheduling import OATestCourse
-from testcase.pywinauto.testTeacherLogin import TestTeacherLogin
+from util.oa_test_course_scheduling import TestOATestCourse
 from time import sleep
-from testcase.pywinauto.testEnterStudio import TestEnterStudio
+from testcase.pywinauto.teacher.testEnterStudio import TestEnterStudio
 
 
 if __name__ == '__main__':
     # OA测试服排课
-    oa_ready_course = OATestCourse()
+    oa_ready_course = TestOATestCourse()
     oa_ready_course.loading()
     oa_ready_course.select_class()
     oa_ready_course.course_scheduling()
