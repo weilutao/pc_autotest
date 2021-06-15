@@ -26,11 +26,11 @@ class TestTeacherLogin:
         cls.titleBar = cls.dlg.window(control_type='TitleBar')
         # self.document.print_control_identifiers()
 
-        # 直播间主窗口
-        cls.dlg_studio = cls.app['贝尔云课堂']
-        # 直播间子窗口
-        cls.document_studio = cls.dlg_studio.window(control_type='Document')
-        cls.titleBar_studio = cls.dlg_studio.window(control_type='TitleBar')
+        # # 直播间主窗口
+        # cls.dlg_studio = cls.app['贝尔云课堂']
+        # # 直播间子窗口
+        # cls.document_studio = cls.dlg_studio.window(control_type='Document')
+        # cls.titleBar_studio = cls.dlg_studio.window(control_type='TitleBar')
 
     # 登录成功
     @allure.step('登录成功')

@@ -1,16 +1,32 @@
 import allure
 import pytest
+from pywinauto import Application
+from config.operation_yaml import OperathionYAML
 
 
-@allure.feature('教师端进入直播间')
-class TestEnterStudio:
+# 参数
+teacher_login_data = OperathionYAML().read_yaml('teacher_login.yaml')
+path = teacher_login_data['init']['path']
+
+# @allure.feature('教师端进入直播间')
+class TestEnterStudio():
     '''
         进入直播间
     '''
+    @classmethod
+    def setup_class(cls):
+        # 启动未打开的客户端
+        cls.app = Application(backend='uia').start(path)
+        # 选择首页主窗口
+        cls.dlg = cls.app['员工登录 - 贝尔云课堂']
+        # 首页子窗口
+        cls.document = cls.dlg.window(control_type='Document')
+        cls.titleBar = cls.dlg.window(control_type='TitleBar')
+
     @allure.step('进入直播间')
-    @pytest.mark.dependency(depends=['teacher_login'], scope='module')
+    # @pytest.mark.dependency(depends=['teacher_login'], scope='package')
     def test_teacher_enter_studio(self):
-        # self.document.print_control_identifiers()
+        self.document.print_control_identifiers()
         # 刷新课表
         refresh_btn = self.document.Static11
         refresh_btn.wait('ready')

@@ -8,7 +8,9 @@ util/__pycache__/
 testcase/__pycache__/
 testcase/pywinauto/__pycache__/
 test.py
+__pycache__/
 
+# 报告
 util/temp/
 reports/
 testcase/pywinauto/teacher/temp/
