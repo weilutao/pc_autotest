@@ -16,6 +16,8 @@ url = oa_pro_course_scheduling_data['init']['get_url']
 phone = oa_pro_course_scheduling_data['loading']['phone']
 password = oa_pro_course_scheduling_data['loading']['password']
 class_name = oa_pro_course_scheduling_data['select_class']['class_name']
+class_types = oa_pro_course_scheduling_data['course_scheduling']['class_types']
+class_time = oa_pro_course_scheduling_data['course_scheduling']['class_time']
 
 
 @allure.feature('排课')
@@ -29,7 +31,7 @@ class TestOAProCourse(object):
 
     @classmethod
     def teardown_class(cls):
-        sleep(50)
+        sleep(5)
         cls.driver.close()
 
     @allure.step('登录OA')
@@ -81,10 +83,10 @@ class TestOAProCourse(object):
         WebDriverWait(self.driver, 5).until(EC.visibility_of_element_located((By.XPATH, "//div[contains(text(), '%s')]" %current_time))).click()
         # 选择课时类型
         WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div[3]/div[2]/div/form/div[1]/div[2]/div/div/div[4]/div[1]/div/div/div/div[2]/input'))).click()
-        WebDriverWait(self.driver, 5).until(EC.visibility_of_element_located((By.XPATH, '//*[contains(text(), "机器人大赛")]'))).click()
+        WebDriverWait(self.driver, 5).until(EC.visibility_of_element_located((By.XPATH, '//*[contains(text(), "%s")]' %class_types))).click()
         # 选择上课时长
         WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH,'/html/body/div[1]/div[3]/div[2]/div/form/div[1]/div[2]/div/div/div[4]/div[2]/div/div/div/div[1]/input'))).click()
-        WebDriverWait(self.driver, 5).until(EC.visibility_of_element_located((By.XPATH, "//span[contains(text(), '120分钟')]"))).click()
+        WebDriverWait(self.driver, 5).until(EC.visibility_of_element_located((By.XPATH, "//span[contains(text(), '%s')]" %class_time))).click()
         # 选择课程种类
         WebDriverWait(self.driver, 5).until(EC.element_to_be_clickable((By.XPATH,'/html/body/div[1]/div[3]/div[2]/div/form/div[2]/div[2]/div/div/div/div[1]/div[2]/div/div/div[1]/input'))).click()
         WebDriverWait(self.driver, 5).until(EC.visibility_of_element_located((By.XPATH, '/html/body/div[8]/div/div[1]/ul/li[1]'))).click()
@@ -101,11 +103,5 @@ class TestOAProCourse(object):
 
 
 if __name__ == '__main__':
-    # ready_course = TestOAProCourse()
-    # ready_course.loading()
-    # ready_course.select_class()
-    # ready_course.course_scheduling()
-    # ready_course.close_driver()
-
     pytest.main(['oa_pro_course_scheduling.py'])
-    os.system('allure generate ./temp -o E:/pc_autotest/reports --clean')
+    # os.system('allure generate ./temp -o E:/pc_autotest/reports --clean')
