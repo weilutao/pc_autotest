@@ -1,6 +1,6 @@
 from util.oa_test_course_scheduling import TestOATestCourse
 from time import sleep
-from testcase.pywinauto.teacher.testEnterStudio import TestEnterStudio
+from testcase.pywinauto.teacher.testTeacherLogin import TestTeacherLogin
 import pytest
 
 
@@ -10,7 +10,8 @@ if __name__ == '__main__':
     sleep(300)
 
     # 登录教师端,进入直播间
+    # pytest.main(['testTeacherLogin.py'])
+    # pytest.main(['testEnterStudio.py'])
+
     pytest.main()
-    enterstudio = TestEnterStudio()
-    sleep(100)
-    enterstudio.close()
+
