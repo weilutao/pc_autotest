@@ -18,6 +18,7 @@ class TestInstall(object):
     #     cls.dlg = cls.package['贝尔云课堂教师端 安装 ']
 
     @allure.step('教师端安装')
+    @pytest.mark.skip
     def test_teacher_install(self):
         self.package = Application(backend='uia').start(t_package)
 
@@ -44,6 +45,7 @@ class TestInstall(object):
         finish_btn.click()
 
     @allure.step('学生端安装')
+    @pytest.mark.skip
     def test_student_install(self):
         self.package = Application(backend='uia').start(s_package)
 

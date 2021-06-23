@@ -44,6 +44,9 @@ class TestTeacherLogin:
         login_btn = self.document.child_window(title="登 录", control_type="Button")
         login_btn.click()
 
+        # 等待插件安装成功
+        sleep(40)
+
 
 if __name__ == '__main__':
     pytest.main(['testTeacherLogin.py'])
