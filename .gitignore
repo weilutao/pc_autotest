@@ -8,7 +8,9 @@ util/__pycache__/
 testcase/__pycache__/
 testcase/pywinauto/__pycache__/
 test.py
+main.py
 testcase/pywinauto/teacher/seejigou.py
+testcase/pywinauto/student/pc/readjieg.py
 __pycache__/
 
 # 报告
@@ -16,4 +18,4 @@ util/temp/
 reports/
 testcase/pywinauto/teacher/temp/
 testcase/pywinauto/temp/
-testcase/pywinauto/student/temp/
+testcase/pywinauto/student/pc/temp/
